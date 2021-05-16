@@ -1,0 +1,29 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "extends": ["react-app", "prettier"],
+  "plugins": ["react", "prettier"],
+  "parserOptions": {
+    "ecmaVersion": 2018
+  },
+  "rules": {
+    "prettier/prettier": [
+      "warn",
+      {
+        "arrowParens": "avoid",
+        "semi": true,
+        "trailingComma": "none",
+        "endOfLine": "lf",
+        "singleQuote": true,
+        "tabWidth": 2,
+        "printWidth": 150,
+        "useTabs": false
+      }
+    ],
+    "no-unused-vars": ["warn", { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }],
+    "no-console": "warn",
+    "jsx-a11y/anchor-is-valid": "off"
+  }
+}
