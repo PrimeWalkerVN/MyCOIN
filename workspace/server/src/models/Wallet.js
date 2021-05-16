@@ -1,7 +1,9 @@
 const { ec } = require('elliptic');
 const { existsSync, readFileSync, unlinkSync, writeFileSync } = require('fs');
 const _ = require('lodash');
-const { getPublicKey, signTxIn, Transaction, TxIn, TxOut } = require('./Transaction/Transaction');
+const { getPublicKey, signTxIn, Transaction } = require('./Transaction/Transaction');
+const TxIn = require('./Transaction/TxIn');
+const TxOut = require('./Transaction/TxOut');
 
 const EC = new ec('secp256k1');
 const privateKeyLocation = process.env.PRIVATE_KEY || `${__dirname}/private_keys.txt`;
@@ -25,6 +27,7 @@ const generatePrivateKey = () => {
 
 const initWallet = () => {
   // let's not override existing private keys
+
   if (existsSync(privateKeyLocation)) {
     return;
   }
@@ -47,6 +50,7 @@ const getBalance = (address, unspentTxOuts) =>
     .sum();
 
 const findTxOutsForAmount = (amount, myUnspentTxOuts) => {
+  console.log(myUnspentTxOuts);
   let currentAmount = 0;
   const includedUnspentTxOuts = [];
   for (const myUnspentTxOut of myUnspentTxOuts) {
@@ -58,9 +62,9 @@ const findTxOutsForAmount = (amount, myUnspentTxOuts) => {
     }
   }
 
-  const eMsg = `${'Cannot create transaction from the available unspent transaction outputs. Required amount:'}
-  ${amount}. Available unspentTxOuts:${JSON.stringify(myUnspentTxOuts)}`;
-  throw Error(eMsg);
+  // const eMsg = `${'Cannot create transaction from the available unspent transaction outputs. Required amount:'}
+  // ${amount}. Available unspentTxOuts:${JSON.stringify(myUnspentTxOuts)}`;
+  throw Error('You do not have enough coin');
 };
 
 const createTxOuts = (receiverAddress, myAddress, amount, leftOverAmount) => {

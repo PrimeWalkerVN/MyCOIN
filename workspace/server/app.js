@@ -2,10 +2,11 @@ const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 const logger = require('morgan');
 const globalErrorHandler = require('./src/controllers/errorsController');
 const AppError = require('./src/utils/AppError');
-const { initP2PServer } = require('./src/models/P2P');
+const BlockChain = require('./src/models/BlockChain');
 const { initWallet } = require('./src/models/Wallet');
 
 const app = express();
@@ -15,6 +16,8 @@ app.set('views', path.join(`${__dirname}/src`, 'views'));
 app.set('view engine', 'jade');
 
 app.use(logger('dev'));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -33,12 +36,11 @@ app.use((req, res, next) => {
 });
 const p2pPort = parseInt(process.env.P2P_PORT, 10) || 6000;
 
-initP2PServer(p2pPort);
+BlockChain.initP2PServer(p2pPort);
 initWallet();
 
-// error handler
 app.all('*', (req, res, next) => {
-  next(new AppError(404, `Can't find ${req.method} - ${req.originalUrl} on this server!`));
+  next(new AppError(`Can't find ${req.method} - ${req.originalUrl} on this server!`, 404));
 });
 app.use(globalErrorHandler);
 

@@ -165,6 +165,23 @@ class Transaction {
     return true;
   }
 
+  validateTxIn(txIn, transaction, aUnspentTxOuts) {
+    const referencedUTxOut = aUnspentTxOuts.find((uTxO) => uTxO.txOutId === txIn.txOutId && uTxO.txOutIndex === txIn.txOutIndex);
+    if (referencedUTxOut == null) {
+      console.log(`referenced txOut not found: ${JSON.stringify(txIn)}`);
+      return false;
+    }
+    const { address } = referencedUTxOut;
+
+    const key = ec.keyFromPublic(address, 'hex');
+    const validSignature = key.verify(transaction.id, txIn.signature);
+    if (!validSignature) {
+      console.log('invalid txIn signature: %s txId: %s address: %s', txIn.signature, transaction.id, referencedUTxOut.address);
+      return false;
+    }
+    return true;
+  }
+
   // Boolean
   validateTransaction(aUnspentTxOuts) {
     if (!this.isValidTransactionStructure()) {
@@ -175,7 +192,7 @@ class Transaction {
       console.log(`invalid tx id: ${this.id}`);
       return false;
     }
-    const hasValidTxIns = this.txIns.map((txIn) => txIn.validateTxIn(this, aUnspentTxOuts)).reduce((a, b) => a && b, true);
+    const hasValidTxIns = this.txIns.map((txIn) => this.validateTxIn(txIn, this, aUnspentTxOuts)).reduce((a, b) => a && b, true);
 
     if (!hasValidTxIns) {
       console.log(`some of the txIns are invalid in tx: ${this.id}`);
