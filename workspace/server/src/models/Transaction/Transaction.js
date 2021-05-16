@@ -19,11 +19,16 @@ const getTxInAmount = (txIn, aUnspentTxOuts) => findUnspentTxOut(txIn.txOutId, t
 
 // Boolean
 const validateCoinbaseTx = (transaction, blockIndex) => {
+  const getTransactionId = (tx) => {
+    const txInContent = tx.txIns.map((txIn) => txIn.txOutId + txIn.txOutIndex).reduce((a, b) => a + b, '');
+    const txOutContent = tx.txOuts.map((txOut) => txOut.address + txOut.amount).reduce((a, b) => a + b, '');
+    return SHA256(txInContent + txOutContent).toString();
+  };
   if (transaction == null) {
     console.log('the first transaction in the block must be coinbase transaction');
     return false;
   }
-  if (transaction.getTransactionId() !== transaction.id) {
+  if (getTransactionId(transaction) !== transaction.id) {
     console.log(`invalid coinbase tx id: ${transaction.id}`);
     return false;
   }
