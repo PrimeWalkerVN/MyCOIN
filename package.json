@@ -1,0 +1,17 @@
+{
+  "name": "mycoin",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "workspaces": ["workspace/*"],
+  "scripts": {
+    "dev:server": "yarn workspace server dev",
+    "dev:client": "yarn workspace client start",
+    "start": "concurrently --kill-others-on-fail \"yarn server\"  \"yarn client\""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^6.0.2"
+  }
+}
