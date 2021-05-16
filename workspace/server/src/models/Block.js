@@ -10,6 +10,7 @@ class Block {
     this.nonce = nonce;
     this.hash = this.calculateHash();
   }
+
   calculateHash() {
     return SHA256(this.index + this.previousHash + this.timestamp + this.data + this.difficulty + this.nonce).toString();
   }
