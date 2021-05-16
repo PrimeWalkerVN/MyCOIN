@@ -20,6 +20,7 @@ module.exports = {
     'no-bitwise': 'off',
     'no-restricted-syntax': 'off',
     'new-cap': 'off',
+    'no-plusplus': 'off',
     'no-unused-vars': ['error', { argsIgnorePattern: 'next' }]
   }
 };

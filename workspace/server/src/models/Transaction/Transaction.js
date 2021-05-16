@@ -1,10 +1,9 @@
-import TxIn from './TxIn';
-import TxOut from './TxOut';
-import UnspentTxOut from './UnspentTxOut';
-
 const ecdsa = require('elliptic');
 const _ = require('lodash');
 const SHA256 = require('crypto-js/sha256');
+const TxIn = require('./TxIn');
+const TxOut = require('./TxOut');
+const UnspentTxOut = require('./UnspentTxOut');
 
 const ec = new ecdsa.ec('secp256k1');
 const COINBASE_AMOUNT = 50;
@@ -202,4 +201,4 @@ const getCoinbaseTransaction = (address, blockIndex) => {
   return t;
 };
 
-export { Transaction, getCoinbaseTransaction, getPublicKey, hasDuplicates, processTransactions, signTxIn };
+module.exports = { Transaction, getCoinbaseTransaction, getPublicKey, hasDuplicates, processTransactions, signTxIn };
