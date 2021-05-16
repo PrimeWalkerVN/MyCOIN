@@ -42,7 +42,6 @@ class PeerToPeer {
   }
 
   responseChainMsg() {
-    console.log('============', this.blockchain.getBlockchain);
     return { type: MessageType.RESPONSE_BLOCKCHAIN, data: JSON.stringify(this.blockchain.getBlockchain()) };
   }
 
