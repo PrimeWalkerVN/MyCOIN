@@ -43,6 +43,14 @@ const deleteWallet = () => {
     unlinkSync(privateKeyLocation);
   }
 };
+
+const createWallet = (privateKey) => {
+  if (existsSync(privateKeyLocation)) {
+    throw Error('Private key already exist');
+  } else {
+    return writeFileSync(privateKeyLocation, privateKey);
+  }
+};
 const findUnspentTxOuts = (ownerAddress, unspentTxOuts) => _.filter(unspentTxOuts, (uTxO) => uTxO.address === ownerAddress);
 const getBalance = (address, unspentTxOuts) =>
   _(findUnspentTxOuts(address, unspentTxOuts))
@@ -132,5 +140,6 @@ module.exports = {
   generatePrivateKey,
   initWallet,
   deleteWallet,
+  createWallet,
   findUnspentTxOuts
 };

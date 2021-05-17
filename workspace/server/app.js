@@ -25,10 +25,12 @@ app.use(express.static(path.join(`${__dirname}/src`, 'public')));
 
 // routes
 const chainRoutes = require('./src/routes/blockchain');
+const walletRoutes = require('./src/routes/wallet');
 const indexRoutes = require('./src/routes/index');
 
 app.use('/', indexRoutes);
 app.use('/blockchain', chainRoutes);
+app.use('/wallet', walletRoutes);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
