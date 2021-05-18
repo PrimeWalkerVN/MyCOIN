@@ -10,6 +10,7 @@ router.get('/transaction/:id', chainController.getTransactionWithId);
 router.get('/address/:address', chainController.getTransactionsFromAddress);
 router.get('/unspentTransactionOutputs', chainController.getUnspentTransactionOutputs);
 router.get('/myUnspentTransactionOutputs', chainController.getMyUnspentTransactionOutputs);
+router.get('/transaction', chainController.getTransaction);
 
 router.post('/mineRawBlock', chainController.mineRawBlock);
 router.post('/mineBlock', chainController.mineBlock);

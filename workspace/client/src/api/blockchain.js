@@ -13,6 +13,10 @@ const blockchainApi = {
     const url = `/blockchain/latest`;
     return axiosClient.get(url);
   },
+  getTransaction: () => {
+    const url = `/blockchain/transaction`;
+    return axiosClient.get(url);
+  },
   getTransactionById: params => {
     const { id } = params;
     const url = `/blockchain/transaction/${id}`;

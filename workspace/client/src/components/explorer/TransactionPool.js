@@ -9,7 +9,6 @@ const TransactionPool = () => {
     try {
       const resLatest = await blockchainApi.getTransactionPool();
       setTxPool(resLatest);
-      console.log(resLatest);
     } catch (err) {}
   };
   useEffect(() => {

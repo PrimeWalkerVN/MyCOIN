@@ -7,6 +7,7 @@ const TxOut = require('./Transaction/TxOut');
 
 const EC = new ec('secp256k1');
 const privateKeyLocation = process.env.PRIVATE_KEY || `${__dirname}/private_keys.txt`;
+const getCurrentTimestamp = () => Math.round(new Date().getTime() / 1000);
 
 const getPrivateFromWallet = () => {
   const buffer = readFileSync(privateKeyLocation, 'utf8');
@@ -120,6 +121,8 @@ const createTransaction = (receiverAddress, amount, privateKey, unspentTxOuts, t
     txIn.from = myAddress;
     txIn.to = receiverAddress;
     txIn.amount = amount;
+    txIn.timestamp = getCurrentTimestamp();
+
     return txIn;
   };
 

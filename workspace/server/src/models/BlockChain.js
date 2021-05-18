@@ -35,10 +35,15 @@ class BlockChain {
     // the unspent txOut of genesis block is set to unspentTxOuts on startup
     this.unspentTxOuts = processTransactions(this.blockchain[0].data, [], 0);
     this.peerToPeer = new PeerToPeer(this);
+    this.transactions = [];
   }
 
   getTransactionPool() {
     return this.transactionPool.getTransactionPool();
+  }
+
+  getTransaction() {
+    return this.transactions;
   }
 
   getBlockchain() {
@@ -57,6 +62,12 @@ class BlockChain {
   setUnspentTxOuts(newUnspentTxOut) {
     console.log('replacing unspentTxouts with: %s', newUnspentTxOut);
     this.unspentTxOuts = newUnspentTxOut;
+  }
+
+  addTransaction(txs) {
+    console.log(txs);
+    this.transactions = this.transactions.concat(txs);
+    return this.transactions;
   }
 
   getLatestBlock() {
@@ -202,12 +213,14 @@ class BlockChain {
   }
 
   generateNextBlock() {
+    this.addTransaction(this.transactionPool.getTransactionPool());
     const coinbaseTx = getCoinbaseTransaction(getPublicFromWallet(), this.getLatestBlock().index + 1);
     const blockData = [coinbaseTx].concat(this.transactionPool.getTransactionPool());
     return this.generateRawNextBlock(blockData);
   }
 
   generateNextBlockWithTransaction(receiverAddress, amount) {
+    this.addTransaction(this.transactionPool.getTransactionPool());
     const txOut = new TxOut(receiverAddress, amount);
     if (!txOut.isValidAddress(receiverAddress)) {
       throw Error('invalid address');

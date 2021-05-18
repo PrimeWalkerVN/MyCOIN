@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 const TxItem = ({ item = {} }) => {
   return (
     <tr>
@@ -10,10 +11,13 @@ const TxItem = ({ item = {} }) => {
         </div>
       </td>
       <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+        <p class="text-gray-900 whitespace-no-wrap">{moment.unix(item.txIns[item.txIns.length - 1].timestamp).fromNow()}</p>
+      </td>
+      <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
         <p class="text-gray-900 whitespace-no-wrap">{item.txIns[item.txIns.length - 1].amount}</p>
       </td>
       <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-        <p class="relative truncate w-64">{item.txIns[item.txIns.length - 1].from}</p>
+        <p class="relative text-blue-400 truncate w-64">{item.txIns[item.txIns.length - 1].from}</p>
       </td>
       <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm ">
         <p class="text-gray-900 whitespace-no-wrap w-64 truncate">{item.txIns[item.txIns.length - 1].to}</p>
@@ -34,6 +38,9 @@ const TransactionList = props => {
                 <tr>
                   <th scope="col" class="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal">
                     Transaction Id#
+                  </th>
+                  <th scope="col" class="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal">
+                    Created at
                   </th>
                   <th scope="col" class="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal">
                     Amount

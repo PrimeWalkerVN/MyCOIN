@@ -23,7 +23,7 @@ const Explorer = () => {
           <Route path="/explorer/block" component={BlockExplorer} />
           <Route path="/explorer/transaction" component={TransactionExplorer} />
           <Route path="/explorer/transaction-pool" component={TransactionPool} />
-          <Redirect from="/explorer" to="/explorer/blocks" />
+          <Redirect from="/explorer" to="/explorer/block" />
         </Switch>
       </div>
     </div>

@@ -6,8 +6,8 @@ const TransactionExplorer = () => {
 
   const fetchData = async () => {
     try {
-      const resLatest = await blockchainApi.getTransactionPool();
-      setTx(resLatest);
+      const resLatest = await blockchainApi.getTransaction();
+      setTx(resLatest.data);
     } catch (err) {}
   };
   useEffect(() => {

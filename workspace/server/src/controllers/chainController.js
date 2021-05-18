@@ -74,6 +74,13 @@ exports.getAddress = async (req, res, next) => {
   res.send({ address });
 };
 
+exports.getTransaction = async (req, res, next) => {
+  const data = chain.getTransaction();
+  res.status(200).json({
+    data
+  });
+};
+
 exports.mineTransaction = async (req, res, next) => {
   const { address } = req.body;
   const { amount } = req.body;
