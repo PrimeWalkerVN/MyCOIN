@@ -3,10 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "private": true,
-  "workspaces": ["workspace/*"],
+  "workspaces": [
+    "workspace/*"
+  ],
   "scripts": {
     "dev:server": "yarn workspace server dev",
     "dev:client": "yarn workspace client start",
+    "start:server": "yarn workspace server start",
+    "start:client": "yarn workspace client start",
     "start": "concurrently --kill-others-on-fail \"yarn server\"  \"yarn client\""
   },
   "author": "",
