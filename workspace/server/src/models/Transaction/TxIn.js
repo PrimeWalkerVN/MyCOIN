@@ -1,8 +1,11 @@
 class TxIn {
-  constructor(txOutId, txOutIndex, signature) {
+  constructor(txOutId, txOutIndex, signature, from, to, amount) {
     this.txOutId = txOutId;
     this.txOutIndex = txOutIndex;
     this.signature = signature;
+    this.from = from;
+    this.to = to;
+    this.amount = amount;
   }
 
   isValidTxInStructure() {

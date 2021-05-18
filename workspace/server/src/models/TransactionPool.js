@@ -16,11 +16,11 @@ class TransactionPool {
 
   addToTransactionPool(tx, unspentTxOuts) {
     if (!tx.validateTransaction(unspentTxOuts)) {
-      throw Error('Trying to add invalid tx to pool');
+      throw Error('Transaction Invalid, please check again');
     }
 
     if (!this.isValidTxForPool(tx)) {
-      throw Error('Trying to add invalid tx to pool');
+      throw Error('Transaction Invalid, please check again');
     }
     console.log('adding to txPool: %s', JSON.stringify(tx));
     this.transactionPool.push(tx);

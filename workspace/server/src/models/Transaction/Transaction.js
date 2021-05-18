@@ -218,7 +218,7 @@ class Transaction {
 }
 
 const getCoinbaseTransaction = (address, blockIndex) => {
-  const txIn = new TxIn('', blockIndex, '');
+  const txIn = new TxIn('', blockIndex, '', '', '', 0);
   const t = new Transaction([txIn], [new TxOut(address, COINBASE_AMOUNT)]);
   return t;
 };

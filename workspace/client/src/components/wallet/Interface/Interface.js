@@ -4,10 +4,10 @@ import Address from '../../core/Address';
 import Balance from '../../core/Balance';
 import NetWork from '../../core/NetWork';
 import DashBoard from './DashBoard';
-import SendTransaction from './SendTransaction';
 import { get, isEmpty } from 'lodash';
 import walletApi from '../../../api/wallet';
 import blockchainApi from '../../../api/blockchain';
+const SendTransaction = React.lazy(() => import('./SendTransaction'));
 
 const Interface = props => {
   const history = useHistory();

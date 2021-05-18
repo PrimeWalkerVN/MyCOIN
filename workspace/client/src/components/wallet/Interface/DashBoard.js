@@ -15,7 +15,7 @@ const DashBoard = props => {
   return (
     <div className="w-full h-full grid grid-cols-4 mt-5">
       <div className="col-span-3">
-        <div className="text-2xl font-bold my-2 text-indigo-800">Your Unspent Transaction Output History</div>
+        <div className="text-2xl font-bold my-2 text-indigo-800">Your Unspent Transaction currently</div>
         <div className="flex flex-col h-96 overflow-y-scroll">
           {data.map((item, index) => (
             <Transaction item={item} index={index} />

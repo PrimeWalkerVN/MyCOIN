@@ -117,6 +117,9 @@ const createTransaction = (receiverAddress, amount, privateKey, unspentTxOuts, t
     const txIn = new TxIn();
     txIn.txOutId = unspentTxOut.txOutId;
     txIn.txOutIndex = unspentTxOut.txOutIndex;
+    txIn.from = myAddress;
+    txIn.to = receiverAddress;
+    txIn.amount = amount;
     return txIn;
   };
 

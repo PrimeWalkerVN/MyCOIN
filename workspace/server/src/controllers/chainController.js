@@ -94,8 +94,11 @@ exports.sendTransaction = async (req, res, next) => {
     if (address === undefined || amount === undefined) {
       throw Error('invalid address or amount');
     }
-    const resp = chain.sendTransaction(address, amount);
-    res.send(resp);
+    const resp = chain.sendTransaction(address, Number(amount));
+    res.status(200).json({
+      status: 'success',
+      data: resp
+    });
   } catch (e) {
     console.log(e.message);
     res.status(400).send(e.message);
