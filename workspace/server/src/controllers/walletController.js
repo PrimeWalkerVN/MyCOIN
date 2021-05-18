@@ -17,3 +17,14 @@ exports.accessWallet = async (req, res, next) => {
     next(new AppError(err, 400));
   }
 };
+
+exports.deleteWallet = async (req, res, next) => {
+  try {
+    await deleteWallet();
+    res.status(200).json({
+      status: 'success'
+    });
+  } catch (err) {
+    next(new AppError(err, 400));
+  }
+};
