@@ -4,6 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
+const cors = require('cors');
 const globalErrorHandler = require('./src/controllers/errorsController');
 const AppError = require('./src/utils/AppError');
 const BlockChain = require('./src/models/BlockChain');
@@ -16,6 +17,8 @@ app.set('views', path.join(`${__dirname}/src`, 'views'));
 app.set('view engine', 'jade');
 
 app.use(logger('dev'));
+app.enable('trust proxy');
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.json());

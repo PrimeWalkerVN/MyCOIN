@@ -19,7 +19,6 @@ function App() {
           <Route path="/wallet" component={Interface} />
           <Route path="/intro" component={Wallet} />
           <Route path="/explorer" component={Explorer} />
-
           <Redirect from="/" to="/wallet" />
           <Route component={NotFound} />
         </Switch>

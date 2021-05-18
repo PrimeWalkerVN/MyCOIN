@@ -5,6 +5,7 @@ const chainController = require('../controllers/chainController');
 
 router.get('/blocks', chainController.getBlocks);
 router.get('/block/:hash', chainController.findBlockWithHash);
+router.get('/latest', chainController.getLatestBlock);
 router.get('/transaction/:id', chainController.getTransactionWithId);
 router.get('/address/:address', chainController.getTransactionsFromAddress);
 router.get('/unspentTransactionOutputs', chainController.getUnspentTransactionOutputs);
@@ -12,9 +13,6 @@ router.get('/myUnspentTransactionOutputs', chainController.getMyUnspentTransacti
 
 router.post('/mineRawBlock', chainController.mineRawBlock);
 router.post('/mineBlock', chainController.mineBlock);
-
-router.get('/balance', chainController.getBalance);
-router.get('/address', chainController.getAddress);
 
 router.post('/mineTransaction', chainController.mineTransaction);
 router.post('/sendTransaction', chainController.sendTransaction);

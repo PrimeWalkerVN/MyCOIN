@@ -1,10 +1,26 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 
 const AccessWalletModal = props => {
-  const { isOpen, setIsOpen } = props;
+  const { isOpen, setIsOpen, onSubmit } = props;
+  const [privateKey, setPrivateKey] = useState('');
+  const [error, setError] = useState('');
   const closeModal = () => {
+    setError('');
     setIsOpen(false);
+  };
+
+  const onSubmitForm = async () => {
+    if (privateKey === '') {
+      setError('Empty field!');
+      return;
+    }
+    if (privateKey.length !== 64) {
+      setError('Wrong private key');
+      return;
+    }
+    await onSubmit(privateKey);
+    closeModal();
   };
 
   return (
@@ -44,17 +60,18 @@ const AccessWalletModal = props => {
                 <div class="mb-3 pt-0">
                   <input
                     type="text"
+                    onChange={({ target }) => setPrivateKey(target.value)}
                     placeholder="Input your private key here!"
                     class="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative  bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"
                   />
                 </div>
               </div>
-
+              {error.length > 0 && <div className="text-red-500 text-sm">Error: {error}</div>}
               <div className="mt-4">
                 <button
                   type="button"
                   className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                  onClick={closeModal}
+                  onClick={onSubmitForm}
                 >
                   Access
                 </button>

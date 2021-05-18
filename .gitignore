@@ -1,5 +1,6 @@
 node_modules
 workspaces/server/node_modules
+workspaces/server/src/models/private_key.txt
 workspaces/client/node_modules
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.

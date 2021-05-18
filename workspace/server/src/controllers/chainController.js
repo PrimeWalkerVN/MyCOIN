@@ -12,6 +12,15 @@ exports.findBlockWithHash = async (req, res, next) => {
   res.send(block);
 };
 
+exports.getLatestBlock = async (req, res, next) => {
+  const block = chain.getLatestBlock();
+  console.log(block);
+  res.status(200).json({
+    status: 'success',
+    data: block
+  });
+};
+
 exports.getTransactionWithId = async (req, res, next) => {
   const tx = _(chain.getBlockchain())
     .map((blocks) => blocks.data)

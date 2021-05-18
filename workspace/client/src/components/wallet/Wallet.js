@@ -1,19 +1,33 @@
 import React, { useState } from 'react';
-import WalletLogo from '../../assets/wallet.png';
-import WalletAccessLogo from '../../assets/wallet-access.png';
 import { AiOutlineArrowRight } from 'react-icons/ai';
+import { useHistory } from 'react-router';
+import walletApi from '../../api/wallet';
 import BigManLogo from '../../assets/logo/big-spaceman.png';
-import { Dialog } from '@headlessui/react';
-import CreateWalletModal from './components/CreateWalletModal';
+import WalletAccessLogo from '../../assets/wallet-access.png';
+import WalletLogo from '../../assets/wallet.png';
 import AccessWalletModal from './components/AccessWalletModal';
+import CreateWalletModal from './components/CreateWalletModal';
 const Wallet = () => {
   const [isOpenCreate, setIsOpenCreate] = useState(false);
   const [isOpenAccess, setIsOpenAccess] = useState(false);
+  const history = useHistory();
   const onCreateWallet = () => {
     setIsOpenCreate(true);
   };
   const onAccessWallet = () => {
     setIsOpenAccess(true);
+  };
+
+  const accessWallet = async privatekey => {
+    const params = {
+      pk: privatekey
+    };
+    try {
+      const res = await walletApi.accessWallet(params);
+      if (res.status === 'success') {
+        history.push('/wallet/dashboard', { privateKey: privatekey });
+      }
+    } catch (err) {}
   };
   return (
     <div className="w-full h-screen mt-3 flex flex-col items-center ">
@@ -62,7 +76,7 @@ const Wallet = () => {
         </div>
       </section>
       <CreateWalletModal isOpen={isOpenCreate} setIsOpen={setIsOpenCreate} />
-      <AccessWalletModal isOpen={isOpenAccess} setIsOpen={setIsOpenAccess} />
+      <AccessWalletModal isOpen={isOpenAccess} setIsOpen={setIsOpenAccess} onSubmit={accessWallet} />
     </div>
   );
 };
