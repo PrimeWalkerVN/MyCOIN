@@ -6,7 +6,7 @@ const TxIn = require('./Transaction/TxIn');
 const TxOut = require('./Transaction/TxOut');
 
 const EC = new ec('secp256k1');
-const privateKeyLocation = process.env.PRIVATE_KEY || `${__dirname}/private_keys.txt`;
+const privateKeyLocation = process.env.PRIVATE_KEY || `${__dirname}/private_key${process.env.PORT}.txt`;
 const getCurrentTimestamp = () => Math.round(new Date().getTime() / 1000);
 
 const getPrivateFromWallet = () => {
