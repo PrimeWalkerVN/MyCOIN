@@ -1,4 +1,7 @@
 const WebSocket = require('ws');
+const { Transaction } = require('./Transaction/Transaction');
+const TxIn = require('./Transaction/TxIn');
+const TxOut = require('./Transaction/TxOut');
 
 const MessageType = {
   QUERY_LATEST: 0,
@@ -142,7 +145,13 @@ class PeerToPeer {
             }
             receivedTransactions.forEach((transaction) => {
               try {
-                this.blockchain.handleReceivedTransaction(transaction);
+                const txIns = transaction.txIns.map(
+                  (txIn) => new TxIn(txIn.txOutId, txIn.txOutIndex, txIn.signature, txIn.from, txIn.to, txIn.amount, txIn.timestamp)
+                );
+                const txOuts = transaction.txOuts.map((txOut) => new TxOut(txOut.address, txOut.amount));
+
+                const tx = new Transaction(txIns, txOuts);
+                this.blockchain.handleReceivedTransaction(tx);
                 // if no error is thrown, transaction was indeed added to the pool
                 // let's broadcast transaction pool
                 this.broadCastTransactionPool();

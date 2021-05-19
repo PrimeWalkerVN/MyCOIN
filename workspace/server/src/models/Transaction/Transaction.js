@@ -125,14 +125,6 @@ const updateUnspentTxOuts = (aTransactions, aUnspentTxOuts) => {
   return resultingUnspentTxOuts;
 };
 
-const processTransactions = (aTransactions, aUnspentTxOuts, blockIndex) => {
-  if (!validateBlockTransactions(aTransactions, aUnspentTxOuts, blockIndex)) {
-    console.log('invalid block transactions');
-    return null;
-  }
-  return updateUnspentTxOuts(aTransactions, aUnspentTxOuts);
-};
-
 class Transaction {
   constructor(txIns, txOuts) {
     this.txIns = txIns;
@@ -216,7 +208,18 @@ class Transaction {
     return true;
   }
 }
-
+const processTransactions = (aTransactions, aUnspentTxOuts, blockIndex) => {
+  const txs = aTransactions.map((tx) => {
+    const txIns = tx.txIns.map((txIn) => new TxIn(txIn.txOutId, txIn.txOutIndex, txIn.signature, txIn.from, txIn.to, txIn.amount, txIn.timestamp));
+    const txOuts = tx.txOuts.map((txOut) => new TxOut(txOut.address, txOut.amount));
+    return new Transaction(txIns, txOuts);
+  });
+  if (!validateBlockTransactions(txs, aUnspentTxOuts, blockIndex)) {
+    console.log('invalid block transactions');
+    return null;
+  }
+  return updateUnspentTxOuts(aTransactions, aUnspentTxOuts);
+};
 const getCoinbaseTransaction = (address, blockIndex) => {
   const txIn = new TxIn('', blockIndex, '', '', '', 0);
   const t = new Transaction([txIn], [new TxOut(address, COINBASE_AMOUNT)]);

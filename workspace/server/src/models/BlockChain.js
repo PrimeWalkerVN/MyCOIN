@@ -85,7 +85,6 @@ class BlockChain {
   hashMatchesDifficulty(hash, difficulty) {
     if (difficulty < 0) return false;
     const hashInBinary = hexToBinary(hash);
-    console.log('difficulty: ', difficulty);
     const requiredPrefix = '0'.repeat(difficulty);
     return hashInBinary.startsWith(requiredPrefix);
   }
